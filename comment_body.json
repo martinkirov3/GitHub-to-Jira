@@ -1,0 +1,12 @@
+//comment_body.json
+{
+  "update": {
+    "comment": [
+      {
+        "add": {
+          "body": "It is time to test this task"
+        }
+      }
+    ]
+  }
+}

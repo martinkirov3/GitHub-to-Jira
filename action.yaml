@@ -1,0 +1,16 @@
+# action.yaml
+name: 'GitHub pre and post push/pull activities'
+description: 'GitHub pre and post push/pull activities'
+inputs:
+  jira_id:
+    description: 'get jira id from git comments'
+    required: true
+    default: 'ESQ-316'
+outputs:
+  issuetype_name:
+    description: 'Type of the Jira issue (bug, etc.)'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.jira_id}}

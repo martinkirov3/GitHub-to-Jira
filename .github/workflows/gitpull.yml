@@ -1,0 +1,78 @@
+name: gitpull
+
+# GithubHooks Project
+# https://prometeia.atlassian.net/browse/ESQ-315
+
+# when either of two events occurs targetting the main branch, 
+# jobs will execute as part of the git workflow.
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+
+jobs: 
+
+ #pre pull activities
+
+  pre-pull-compare-issue-type:
+
+    runs-on: ubuntu-latest # GitHub hosted runner goes here
+    steps: 
+    - name: Check branch relevance (by configuration)
+      uses: ./ # Uses an action in the root directory
+      run: echo "Check branch relevance (by configuration) run"
+ 
+    - name: Get Jira Issue Type
+      uses: ./ # Uses an action in the root directory
+      id: jira_issue_type
+      with:
+        jira_id: ESQ-316
+    - name: Get Jira Issue Type
+      run: echo "${{ steps.jira_issue_type.outputs.issuetype_name }}  run"
+
+
+    - name: get Jira tracking number from github
+      run: echo "This step will always run"
+
+
+    - name: call Jira issue checker engine (TrackingIssueChecker)
+      run: echo "This step will always run"
+
+
+ #post pull activities
+
+  add-comment-jira-ids:
+
+    runs-on: ubuntu-latest # GitHub hosted runner goes here
+ 
+    steps:
+    - uses: ./ # Uses an action in the root directory
+ 
+    - name: Get from github
+      uses: ./ # Uses an action in the root directory
+
+ 
+    - name: get Jira tracking issue
+      run: echo "This step will always run"
+
+    - name: get Author
+      id: get_author
+      run: echo "${{ steps.get_author.name }} step run"
+
+    - name: get Log
+      run: echo "This step will always run"
+
+    - name: get repo/branch
+      run: echo "This step will always run"
+
+    - name: Add comment to related Jira issue (by calling PublicAddCommentEngine)
+      id: add_comment_to_jira
+      with:
+        body: ESQ-316  
+    run: echo "This step will always run"
